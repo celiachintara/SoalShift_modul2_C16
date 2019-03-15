@@ -346,8 +346,63 @@ nano soal5a.c
 
 Berikut penjelasan script soal5a.c yang telah kami buat
 ``` 
-coming soon
+char locsys[100] = "/var/log/syslog";
 ```
+
+- Membuat array of char untuk menyimpan direktori syslog.
+
+```
+time_t waktuasli;
+time(&waktuasli); //jagajaga
+struct tm *timez;
+timez = localtime(&waktuasli);
+char timestamp[100];
+sprintf(timestamp , "%02d:%02d:%d-%02d:%02d" , timez->tm_mday , timez->tm_mon+1 , timez->tm_year+1900 , timez->tm_hour , timez->tm_min);
+```
+
+- Menyimpan tanggal,bulan,tahun dan waktu berupa jam dan menit secara real time.
+
+```
+if(mkdir("/home/celiachintara/log",0777));
+char loc[200] = "/home/celiachintara/log/";
+char nama[200]; 
+strcpy(nama,loc);
+strcat(nama,timestamp);
+mkdir(nama,0777);
+```
+
+- if(mkdir("/home/celiachintara/log",0777)) : membuat folder dengan direktori seperti yang tertulis.
+- char loc[200] = "/home/celiachintara/log/" : akan digunakan untuk membuat folder log setiap 30 menit.
+- char nama[200] : digunakan untuk menyimpan direktori folder log yang akan dibuat dalam folder log setiap 30 menit.
+- Setelah dicopy dan digabungkan, kemudian dibuatlah folder sesuai dengan direktori yang sudah diatur dalam variable nama.
+
+```
+for(menit=0 ; menit<30 ; menit++){
+		
+		FILE *now , *next ;
+		now = fopen(locsys , "r");
+		
+		char file_dalam[300];
+		strcpy(file_dalam , nama);
+		char nomerlog[50];
+		sprintf(nomerlog, "/log%d.log", menit+1);
+		strcat(file_dalam , nomerlog);
+
+		next = fopen(file_dalam,"w+");
+		
+		while((fgets(temp,sizeof(temp),now)) != NULL){
+			fputs(temp,next);
+		}
+		fclose(now);
+		fclose(next);
+		sleep(60);
+	}
+```
+
+- Melakukan for sebanyak 30x dengan sleep(60) , artinya yaitu setiap menit akan dibuat file log selama 30 menit. Jadi dalam 30 menit akan terbentuk 1 folder log dengan isi 30 file log.
+- Membuat direktori yang disimpan ke dalam variable file_dalam untuk membuat file log dengan format penamaan "log#.log", # merupakan bilangat bulat yang dimulai dari angka 1 sampai paling besar yaitu 30.
+- Isi file yang telah jadi akan dicopy ke sebuah variable temp yang kemudian akan dicopy lagi ke file yang akan tersimpan di dalam folder.
+
 
 Kemudian, compile script soal5a.c 
 ```
@@ -366,8 +421,30 @@ nano soal5b.c
 
 Berikut penjelasan script soal5b.c yang telah kami buat
 ```
-comsoon
+FILE *openfile = popen("pidof /home/celiachintara/SISOP/prak2/soal5a", "r");
 ```
+
+- Membuat variable openfile yang bertipe file gunanya untuk membuat file dengan direktori yang tertera di atas. 
+
+```
+fgets(t, 10, openfile);
+```
+
+- Menyimpan isi openfile ke dalam variable t.
+
+```
+pid = strtoul(t, NULL, 12)
+```
+
+- Mengkonversi variable t yang berupa string menjadi integer.
+
+```
+if(!kill(pid, SIGKILL)) //kill proses
+        printf("Proses yang memiliki pid %d telah berhasil dihentikan\n", pid)
+```
+
+- Jika proses KILL berhasil, maka akan tercetak tulisan seperti diatas.
+
 
 Kemudian, compile script soal5b.c
 ```

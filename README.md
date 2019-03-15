@@ -5,7 +5,77 @@
 Catatan : Tidak boleh menggunakan crontab.
 
 #### Jawaban :
+```
+DIR *dir;
+chdir("/home/irkham/SISOP/modul2/gambar/");
+dir=opendir("/home/irkham/SISOP/modul2/");
+struct dirent *ent;
+int length;
+```
 
+- DIR *dir; : membuat sebuah variable yang bernama dir dengan tipe DIR.
+- chdir("/home/irkham/SISOP/modul2/gambar/") : menentukan spesifikasi path tujuan.
+- dir=opendir("/home/irkham/SISOP/modul2/") : variable dir membuka folder dengan direktori seperti yang tertulis.
+- struct dirent *ent : variable ent yang bertipe struct dirent yaitu sebuauh tipe struktur yang mengembalikan informasi mengenai direktori suatu entri.
+- int length : variable length dengan tipe integer yang nantinya berfungsi untuk menyimpan panjang karakter dari nama filenya.
+
+```
+char new[2000], old[1000] , grey[20];
+memset(new, '\0' , sizeof(new));
+memset(old, '\0' , sizeof(old));
+memset(grey, '\0' , sizeof(grey));
+```
+
+- char new[2000], old[1000] , grey[20] : membuat array bertipe char yang akan digunakan untuk menyimpan direktori asal, yang baru, dan menyimpan tambahan kata "_grey.png".
+- memset(new, '\0' , sizeof(new)) : meng-set seluruh array berisi null.
+  memset(old, '\0' , sizeof(old))
+  memset(grey, '\0' , sizeof(grey))
+  
+```
+while((ent=readdir(dir)) != NULL){
+ if(strstr(ent->d_name,".png") != NULL){
+   length = strlen(ent->d_name);
+```
+- while((ent=readdir(dir)) != NULL): variable ent membaca isi dir, jika ada isinya (tidak NULL), maka perintah dalam while tersebut akan dijalankan.
+- if(strstr(ent->d_name,".png") != NULL): perintah **strstr** berfungsi untuk memotong string. String yang dipotong adalah string d_name yang diambil dari variable ent, stringnya dipotong dari mulai tulisan ".png". jadi yang didapat yaitu hanya nama filenya saja tanpa ekstensinya.
+- length = strlen(ent->d_name) : menghitung panjang karakter dari string d_name dari variable ent.
+
+```
+strcpy(old, "/home/irkham/SISOP/modul2/");
+strcpy(new,"/home/irkham/SISOP/modul2/gambar/");
+strcpy(grey, "_grey.png");
+```
+
+- strcpy(old, "/home/irkham/SISOP/modul2/") : meng-copy tulisan dikanan tanda koma(,) , ke dalam variable old.
+- strcpy(new,"/home/irkham/SISOP/modul2/gambar/") : meng-copy tulisan dikanan tanda koma(,) , ke dalam variable new;
+- strcpy(grey, "_grey.png") : meng-copy tulisan dikanan tanda koma(,) , ke dalam variable grey.
+
+```
+strcat(old,ent->d_name);
+strncat(new, ent->d_name,length-4);
+strcat(new,grey);
+```
+
+- strcat(old,ent->d_name) : menggabungkan isi variable old dengan string d_name dari variable ent, maka akan didapatkan direktori lengkap dari file asli serta nama filenya dan hasilnya akan meng-replace isi variable old sebelumnya.
+- strncat(new, ent->d_name,length-4) : menggabungkan isi variable new dengan string d_name dari variable ent sebanyak *length - 4* karakter, dikurangi 4 karakter yaitu (.) (p) (n) (g) , maka akan didapatkan direktori tujuan serta nama filenya dan hasilnya akan meng-replace isi variable new sebelumnya.
+- strcat(new,grey) : menggabungkan isi variable new dengan variable grey, maka akan didapatkan direktori tujuan serta nama filenya yang sudah dilengkapi dengan tambahan kata "_grey.png" dan hasilnya akan mengreplace isi variable new sebelumnya.
+
+``` 
+pid_t child_id;
+          int status;
+          
+          child_id = fork();
+  
+          if (child_id == 0) {
+            char *argv[4] = {"mv", old, new, NULL};
+            execv("/bin/mv", argv);
+          }
+          else{
+            while ((wait(&status)) > 0);
+          }
+```
+
+- char *argv[4] = {"mv", old, new, NULL} : memindahkan file dari direktori old ke direktori new.
 
 
 

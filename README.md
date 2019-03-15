@@ -5,6 +5,13 @@
 Catatan : Tidak boleh menggunakan crontab.
 
 #### Jawaban :
+
+Membuat script soal1.c pada terminal
+```
+nano soal1.c
+```
+
+Kemudian, berikut penjelasan dari script soal1.c yang telah kami buat
 ```
 DIR *dir;
 chdir("/home/irkham/SISOP/modul2/gambar/");
@@ -77,6 +84,16 @@ pid_t child_id;
 
 - char *argv[4] = {"mv", old, new, NULL} : memindahkan file dari direktori old ke direktori new.
 
+Kemudian, compile soal1.c dengan cara mengetikkan ini di terminal
+```
+gcc -o soal1 soal1.c
+```
+
+Kemudian, run soal1 yang telah dibuat dengan mengetikkan ini di terminal
+```
+./soal1
+```
+
 
 
 2. Pada suatu hari Kusuma dicampakkan oleh Elen karena Elen dimenangkan oleh orang lain. Semua kenangan tentang Elen berada pada file bernama “elen.ku” pada direktori “hatiku”. Karena sedih berkepanjangan, tugas kalian sebagai teman Kusuma adalah membantunya untuk menghapus semua kenangan tentang Elen dengan membuat program C yang bisa mendeteksi owner dan group dan menghapus file “elen.ku” setiap 3 detik dengan syarat ketika owner dan grupnya menjadi “www-data”. Ternyata kamu memiliki kendala karena permission pada file “elen.ku”. Jadi, ubahlah permissionnya menjadi 777. Setelah kenangan tentang Elen terhapus, maka Kusuma bisa move on.
@@ -84,6 +101,50 @@ pid_t child_id;
 Catatan: Tidak boleh menggunakan crontab.
 
 #### Jawaban :
+
+Buatlah folder /hatiku
+```
+mkdir hatiku
+```
+
+Buat file bernama *elen.ku* didalam folder /hatiku
+```
+cd hatiku
+touch elen.ku
+```
+
+Membuat script soal2.c pada terminal
+```
+nano soal2.c
+```
+
+Berikut penjelasan script soal2.c yang telah kami buat
+```
+struct stat file;
+  char loc[100] = "/home/celiachintara/SISOP/prak2/hatiku/elen.ku";
+```
+
+- struct stat file : membuat variable bernama file yang bertipe struct stat.
+- char loc[100] = "/home/celiachintara/SISOP/prak2/hatiku/elen.ku" : membuat variable array of char bernama loc yang berisikan direktori dari file elen.ku.
+
+```
+hasnt done yet
+```
+
+Ketikkan pada terminal perintah berikut, untuk mengecek owner dan group 
+```
+sudo chown www-data:www-data elen.ku
+```
+
+Kemudian, compile script soal2.c
+```
+gcc -o soal2 soal2.c
+```
+
+Kemudian, run file soal2
+```
+./soal2
+```
 
 
 
@@ -103,6 +164,28 @@ Catatan:
 
 #### Jawaban : 
 
+Membuat script soal3.c
+```
+nano soal3.c
+```
+
+Berikut penjelasan dari script soal3.c yang telah kami buat
+```
+hasnt done yet
+```
+
+Kemudian, compile script soal3.c dengan mengetikkan ini pada terminal
+```
+gcc -o soal3 soal3.c
+```
+
+Kemudian, run file soal3
+```
+./soal3
+```
+
+
+
 
 
 4. Dalam direktori /home/[user]/Documents/makanan terdapat file makan_enak.txt yang berisikan daftar makanan terkenal di Surabaya. Elen sedang melakukan diet dan seringkali tergiur untuk membaca isi makan_enak.txt karena ngidam makanan enak. Sebagai teman yang baik, Anda membantu Elen dengan membuat program C yang berjalan setiap 5 detik untuk memeriksa apakah file makan_enak.txt pernah dibuka setidaknya 30 detik yang lalu (rentang 0 - 30 detik).
@@ -117,6 +200,34 @@ Catatan:
 - Contoh nama file : makan_sehat1.txt, makan_sehat2.txt, dst
 
 #### Jawaban :
+
+Membuat folder /makanan dalam folder /Documents dan pastikan file makanan_enak.txt terletak didalam folder makanan tadi.
+```
+mkdir makanan
+```
+
+Membuat script soal4.c
+```
+nano soal4.c
+```
+
+Berikut penjelasan script soal4.c yang telah kami buat
+```
+hasnt done yet
+```
+
+
+Kemudian, compile script soal4.c dengan mengetikkan ini pada terminal
+``` 
+gcc -o soal4 soal4.c
+
+```
+
+Kemudian, run file soal4
+```
+./soal4
+```
+
 
 
 
@@ -134,4 +245,46 @@ b. Buatlah program c untuk menghentikan program di atas.
 NB: Dilarang menggunakan crontab dan tidak memakai argumen ketika menjalankan program.
 
 #### Jawaban :
+
+Membuat script soal5a.c
+```
+nano soal5a.c
+```
+
+Berikut penjelasan script soal5a.c yang telah kami buat
+``` 
+coming soon
+```
+
+Kemudian, compile script soal5a.c 
+```
+gcc -o soal5a soal5a.c
+```
+
+Kemudian, run file soal5a
+```
+./soal5a
+```
+
+Membuat script soal5b.c
+```
+nano soal5b.c
+```
+
+Berikut penjelasan script soal5b.c yang telah kami buat
+```
+comsoon
+```
+
+Kemudian, compile script soal5b.c
+```
+gcc -o soal5b soal5b.c
+```
+
+Kemudian, run script soal5b
+```
+./soal5b
+```
+
+
 

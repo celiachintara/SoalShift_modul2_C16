@@ -353,7 +353,7 @@ char locsys[100] = "/var/log/syslog";
 
 ```
 time_t waktuasli;
-time(&waktuasli); //jagajaga
+time(&waktuasli);
 struct tm *timez;
 timez = localtime(&waktuasli);
 char timestamp[100];

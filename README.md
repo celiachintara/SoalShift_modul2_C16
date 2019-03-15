@@ -29,14 +29,12 @@ int length;
 ```
 char new[2000], old[1000] , grey[20];
 memset(new, '\0' , sizeof(new));
-memset(old, '\0' , sizeof(old));
-memset(grey, '\0' , sizeof(grey));
+...
+...
 ```
 
 - char new[2000], old[1000] , grey[20] : membuat array bertipe char yang akan digunakan untuk menyimpan direktori asal, yang baru, dan menyimpan tambahan kata "_grey.png".
 - memset(new, '\0' , sizeof(new)) : meng-set seluruh array berisi null.
-  memset(old, '\0' , sizeof(old))
-  memset(grey, '\0' , sizeof(grey))
   
 ```
 while((ent=readdir(dir)) != NULL){
@@ -124,11 +122,48 @@ struct stat file;
   char loc[100] = "/home/celiachintara/SISOP/prak2/hatiku/elen.ku";
 ```
 
-- struct stat file : membuat variable bernama file yang bertipe struct stat.
+- struct stat file : membuat variable bernama file yang bertipe struct stat, yaitu variable yang dapat menyimpan informasi tentang file itu sendiri.
 - char loc[100] = "/home/celiachintara/SISOP/prak2/hatiku/elen.ku" : membuat variable array of char bernama loc yang berisikan direktori dari file elen.ku.
 
 ```
-hasnt done yet
+if( stat(loc,&file) == 0){
+   chmod(loc, S_IRWXU|S_IRWXG|S_IRWXO);
+```
+
+- if( stat(loc,&file) == 0) : mengarahkan isi variable loc yang berupa direktori menuju alamat variable file.
+- chmod(loc, S_IRWXU|S_IRWXG|S_IRWXO) : digunakan untuk mengganti permission file.
+
+```
+ struct passwd *pw;
+   pw = getpwuid(file.st_uid);
+ struct group *gr;
+   gr  = getgrgid(file.st_gid);
+   
+   char *ow , *grp;
+   ow = pw->pw_name;
+   grp = gr->gr_name;
+```
+
+- script diatas digunakan untuk mengecek owner dan group
+
+```
+if(strcmp(ow,"www-data")==0 && strcmp(grp,"www-data")==0){
+    remove(loc);
+   }
+```
+
+- membandingkan data yang didapat dari script sebelumnya dengan "www-data" , jika benar maka file yang terdapat dalam variable loc akan terhapus.
+
+```
+sleep(3)
+```
+
+- karena permintaan soal untuk menghapus file setiap 3 detik, maka digunakan sleep(3). Setelah 3 detik dilalui, maka program akan dijalankan lagi.
+
+
+Ubah permission file dengan mengetikkan ini di terminal
+```
+chmod 777 elen.ku
 ```
 
 Ketikkan pada terminal perintah berikut, untuk mengecek owner dan group 
@@ -171,8 +206,36 @@ nano soal3.c
 
 Berikut penjelasan dari script soal3.c yang telah kami buat
 ```
-hasnt done yet
+char *unzip[] = {"unzip","/home/irkham/SISOP/modul2/campur2.zip", NULL};
+ 		execvp("unzip",unzip);
 ```
+
+- Perintah untuk meng-unzip folder campur2.zip.
+
+```
+dup2(p[1], 1);
+            close(p[0]);
+            char *ls[] = {"ls","/home/irkham/SISOP/modul2/campur2", NULL};
+            execvp("ls", ls);
+```
+
+- Perintah untuk meng-list isi dari folder campur2.
+
+```
+dup2(open_file, 1);
+            char *grep[] = {"grep", "[.]txt$", NULL};
+            execvp("grep", grep);
+```
+
+- Perintah untuk memfilter file didalam folder campur2 yang memiliki ekstensi .txt.
+
+```
+char *touch[] = {"touch","daftar.txt",NULL};
+     		execvp("touch",touch);
+```
+
+- Perintah untuk membuat file daftar.txt.
+
 
 Kemudian, compile script soal3.c dengan mengetikkan ini pada terminal
 ```
@@ -213,9 +276,40 @@ nano soal4.c
 
 Berikut penjelasan script soal4.c yang telah kami buat
 ```
-hasnt done yet
+char loc[200] = {"/home/celiachintara/Documents/makanan/makan_enak.txt"};
+char rem[200] = {"/home/celiachintara/Documents/makanan/makan_sehat"};
 ```
 
+- Membuat variable array of char yang menyimpan direktori asal dan tujuan.
+
+```
+char c[10000];
+  	memset(c,'\0',sizeof(c));
+  	int count = 1;
+```
+
+- Membuat array yang akan digunakan untuk menyimpan bilangan bulat untuk penamaan file barunya.
+
+```
+time_t lastvisited = hm.st_mtime
+```
+
+- Digunakan untuk menyimpan waktu terakhir file makan_enak.txt dibuka.
+
+```
+if(difftime(time(NULL),lastvisited) <= 30){
+		sprintf(c,"%d",count);
+		count++;
+		strcat(c,".txt");
+		strcat(rem,c);
+		
+		file=fopen(rem,"w+")
+ ```
+ 
+ - Difftime : digunakan untuk mencari selisih waktu saat ini dengan waktu terakhir file makan_enak.txt dibuka.
+ - sprintf : digunakan untuk mengkonvert nilai count yang berupa integer menjadi nilai c yang berupa karakter. Setelah diconvert nilai count akan diincrement.
+ - strcat(c,".txt") : menggabungkan bilangan bulat tadi dengan string ".txt".
+ - strcat(rem,c) : menggabungkan direktori file yang baru dengan bilangan bulat yang telah dilengkapi denggan ekstensi ".txt".
 
 Kemudian, compile script soal4.c dengan mengetikkan ini pada terminal
 ``` 
@@ -227,7 +321,6 @@ Kemudian, run file soal4
 ```
 ./soal4
 ```
-
 
 
 
